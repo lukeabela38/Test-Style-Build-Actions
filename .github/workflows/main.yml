@@ -44,7 +44,7 @@ jobs:
           coverage run -m pytest
           coverage report -m > output-logs/coverage-report-${{ matrix.python-version }}.xml
           coverage html
-          cp htmlcov output-logs/
+          cp -r htmlcov output-logs/
           rm -rf htmlcov
 
       - name: Upload pytest test results
