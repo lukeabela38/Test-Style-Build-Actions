@@ -29,7 +29,7 @@ jobs:
     - name: Upload Output Logs
       uses: actions/upload-artifact@v3
       with:
-        name: output-logs/
+        name: output-logs
         path: output-logs
 
     - name: Shutdown Docker Compose file
@@ -39,4 +39,4 @@ jobs:
     - name: Download all workflow run artifacts
       uses: actions/download-artifact@v3
       with:
-        name: output-logs/
+        name: output-logs
