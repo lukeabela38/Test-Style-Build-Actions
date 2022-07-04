@@ -47,6 +47,13 @@ jobs:
           cp -r htmlcov output-logs/
           rm -rf htmlcov
 
+      - name: Obtain Radon Metrics
+        run: |
+          radon cc . > output-logs/radon-cyclomatic-complexity-${{ matrix.python-version }}.txt
+          radon raw . > output-logs/radon-raw-metrics-${{ matrix.python-version }}.txt
+          radon mi . > output-logs/radon-maintainability-index-${{ matrix.python-version }}.txt
+          radon hal . > output-logs/radon-halstead-metrics-${{ matrix.python-version }}.txt
+
       - name: Upload pytest test results
         uses: actions/upload-artifact@v3
         with:

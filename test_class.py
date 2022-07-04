@@ -1,5 +1,5 @@
 import pytest
-from calculator import f, add, subtract, multiply, divide
+from main import f, add, subtract, multiply, divide
 
 
 def test_f():
