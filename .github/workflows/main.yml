@@ -60,5 +60,9 @@ jobs:
         with:
           name: coverage-report-${{ matrix.python-version }}
           path: coverage-report-${{ matrix.python-version }}.xml
+
+      - name: Upload flake8 test html results
+        uses: actions/upload-artifact@v3
+        with:
           name: coverage-report-html-${{ matrix.python-version }}
           path: htmlcov
