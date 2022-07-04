@@ -27,42 +27,30 @@ jobs:
           pip install pytest
           if [ -f requirements_test.txt ]; then pip install -r requirements_test.txt; fi
           
+      - name: Create output logs folder
+        run: |
+          mkdir output-logs/
+
       - name: Lint with flake8
         run: |
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --show-source --max-line-length=127 --statistics >> flake8-${{ matrix.python-version }}.xml
-
-      - name: Upload flake8 test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: flake8-${{ matrix.python-version }}
-          path: flake8-${{ matrix.python-version }}.xml
+          flake8 . --count --exit-zero --show-source --max-line-length=127 --statistics >> output-logs/flake8-${{ matrix.python-version }}.xml
 
       - name: Test with pytest
-        run: pytest test_class.py --doctest-modules --junitxml=junit/test-results-${{ matrix.python-version }}.xml
+        run: pytest test_class.py --doctest-modules --junitxml=output-logs/junit/test-results-${{ matrix.python-version }}.xml
         
-      - name: Upload pytest test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: pytest-results-${{ matrix.python-version }}
-          path: junit/test-results-${{ matrix.python-version }}.xml
-        # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
-
       - name: Assess coverage of unit tests
         run: |
           coverage run -m pytest
-          coverage report -m > coverage-report-${{ matrix.python-version }}.xml
+          coverage report -m > output-logs/coverage-report-${{ matrix.python-version }}.xml
           coverage html
+          cp htmlcov output-logs/
+          rm -rf htmlcov
 
-      - name: Upload flake8 test results
+      - name: Upload pytest test results
         uses: actions/upload-artifact@v3
         with:
-          name: coverage-report-${{ matrix.python-version }}
-          path: coverage-report-${{ matrix.python-version }}.xml
-
-      - name: Upload flake8 test html results
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-report-html-${{ matrix.python-version }}
-          path: htmlcov
+          name: pytest-flake-coverage-results-${{ matrix.python-version }}
+          path: output-logs/
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
