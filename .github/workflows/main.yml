@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
 
     steps:
       - uses: actions/checkout@v3
@@ -48,3 +48,17 @@ jobs:
           path: junit/test-results-${{ matrix.python-version }}.xml
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
+
+      - name: Assess coverage of unit tests
+        run: |
+          coverage run -m pytest
+          coverage report -m > coverage-report-${{ matrix.python-version }}.xml
+          coverage html
+
+      - name: Upload flake8 test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report-${{ matrix.python-version }}
+          path: coverage-report-${{ matrix.python-version }}.xml
+          name: coverage-report-html-${{ matrix.python-version }}
+          path: htmlcov
