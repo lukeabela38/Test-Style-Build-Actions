@@ -34,15 +34,15 @@ jobs:
       - name: Lint with flake8
         run: |
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --show-source --max-line-length=127 --statistics >> output-logs/flake8-${{ matrix.python-version }}.xml
+          flake8 . --count --exit-zero --show-source --max-line-length=127 --statistics >> output-logs/flake8-${{ matrix.python-version }}.txt
 
       - name: Test with pytest
-        run: pytest test_class.py --doctest-modules --junitxml=output-logs/junit/test-results-${{ matrix.python-version }}.xml
+        run: pytest test_class.py --doctest-modules --junitxml=output-logs/junit/test-results-${{ matrix.python-version }}.txt
         
       - name: Assess coverage of unit tests
         run: |
           coverage run -m pytest
-          coverage report -m > output-logs/coverage-report-${{ matrix.python-version }}.xml
+          coverage report -m > output-logs/coverage-report-${{ matrix.python-version }}.txt
           coverage html
           cp -r htmlcov output-logs/
           rm -rf htmlcov
