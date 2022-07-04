@@ -6,6 +6,7 @@ def test_f():
     with pytest.raises(SystemExit):
         f()
 
+
 class TestClass:
 
     def test_add_0(self):
