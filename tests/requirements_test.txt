@@ -1,3 +1,4 @@
 flake8==4.0.1
 coverage==5.5
 radon==4.0.0
+pytest==6.2.5

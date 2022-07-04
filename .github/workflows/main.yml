@@ -2,7 +2,7 @@ name: Python Package Test
 
 on: 
   push:
-    branches: ["main"]
+    branches: ["main", "dev"]
 
   workflow_dispatch:
 
@@ -14,59 +14,29 @@ concurrency:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+    runs-on: ubuntu-18.04
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-          
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
-        
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade pip setuptools wheel
-          pip install pytest
-          if [ -f requirements_test.txt ]; then pip install -r requirements_test.txt; fi
-          
-      - name: Create output logs folder
-        run: |
-          mkdir output-logs/
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        docker build . --file Dockerfile --tag sc-testing-service
 
-      - name: Lint with flake8
-        run: |
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --show-source --max-line-length=127 --statistics >> output-logs/flake8-${{ matrix.python-version }}.txt
+    - name: Execute Docker Compose file
+      run: |
+        docker-compose up
 
-      - name: Test with pytest
-        run: pytest test_class.py --doctest-modules --junitxml=output-logs/junit/test-results-${{ matrix.python-version }}.xml
-        
-      - name: Assess coverage of unit tests
-        run: |
-          coverage run -m pytest
-          coverage report -m > output-logs/coverage-report-${{ matrix.python-version }}.txt
-          coverage html
-          cp -r htmlcov output-logs/
-          rm -rf htmlcov
+    - name: Upload Output Logs
+      uses: actions/upload-artifact@v3
+      with:
+        name: output-logs/
+        path: output-logs/
 
-      - name: Obtain Radon Metrics
-        run: |
-          radon cc . > output-logs/radon-cyclomatic-complexity-${{ matrix.python-version }}.txt
-          radon raw . > output-logs/radon-raw-metrics-${{ matrix.python-version }}.txt
-          radon mi . > output-logs/radon-maintainability-index-${{ matrix.python-version }}.txt
-          radon hal . > output-logs/radon-halstead-metrics-${{ matrix.python-version }}.txt
+    - name: Shutdown Docker Compose file
+      run: |
+        docker-compose down
 
-      - name: Upload pytest test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: pytest-flake-coverage-results-${{ matrix.python-version }}
-          path: output-logs/
-        # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
+    - name: Download all workflow run artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: output-logs/

@@ -39,6 +39,6 @@ The following are the definitions employed by Radon:
 5. Multi: The number of lines which represent multi-line strings.
 6. Blanks: The number of blank lines (or whitespace-only ones).
 
-## Halstead Metric
+### Halstead Metric
 
 Halstead’s goal was to identify measurable properties of software, and the relations between them. These numbers are statically computed from the source code.

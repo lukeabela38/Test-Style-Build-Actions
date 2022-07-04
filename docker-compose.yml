@@ -1,0 +1,7 @@
+version: '3.3'
+services:
+    scraper:
+        container_name: smartcow-python-testing-service
+        volumes:
+            - '$PWD:/code'
+        image: sc-testing-service
