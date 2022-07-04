@@ -30,7 +30,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: output-logs/
-        path: output-logs/
+        path: output-logs
 
     - name: Shutdown Docker Compose file
       run: |
