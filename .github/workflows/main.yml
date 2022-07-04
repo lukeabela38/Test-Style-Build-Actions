@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
 
     steps:
       - uses: actions/checkout@v3
@@ -37,7 +37,7 @@ jobs:
           flake8 . --count --exit-zero --show-source --max-line-length=127 --statistics >> output-logs/flake8-${{ matrix.python-version }}.txt
 
       - name: Test with pytest
-        run: pytest test_class.py --doctest-modules --junitxml=output-logs/junit/test-results-${{ matrix.python-version }}.txt
+        run: pytest test_class.py --doctest-modules --junitxml=output-logs/junit/test-results-${{ matrix.python-version }}.xml
         
       - name: Assess coverage of unit tests
         run: |
