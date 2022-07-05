@@ -3,6 +3,8 @@ name: Python Package Test
 on: 
   push:
     branches: ["main", "dev"]
+  pull:
+    branches: ["main", "dev"]
 
   workflow_dispatch:
 
@@ -25,7 +27,7 @@ jobs:
     - name: Execute Docker Compose file
       run: |
         docker-compose up
-
+/authorize/bitbucket
     - name: Upload Output Logs
       uses: actions/upload-artifact@v3
       with:
@@ -46,6 +48,7 @@ jobs:
       with:
         github-token: ${{ secrets.github_token }}
         flag-name: run-ubuntu-18.04-python-3.6.9
+        path-to-lcov: ${{ github.workspace }}/coverage/lcov.info
         parallel: true
 
   coveralls:
