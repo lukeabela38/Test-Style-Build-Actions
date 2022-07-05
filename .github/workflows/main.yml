@@ -3,9 +3,7 @@ name: Python Package Test
 on: 
   push:
     branches: ["main", "dev"]
-  pull:
-    branches: ["main", "dev"]
-
+    
   workflow_dispatch:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
