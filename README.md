@@ -1,6 +1,6 @@
 # myCalculator
 
-This is a generic repository to faciltate experimentation for best testing practices.
+This is a generic repository to faciltate experimentation for best testing practices. To use this system simply
 
 ## [Pytest](https://docs.pytest.org/en/7.1.x/)
 
