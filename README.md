@@ -1,6 +1,6 @@
 # myCalculator
 
-This is a generic repository to faciltate experimentation for best testing practices.
+This is a generic template repository to faciltate experimentation for best testing practices. To use simply drop your source code into ```src``` folder and your tests into ```tests``` folder. Push your repository and allow github actions to build and return pytest-flake-coverage results for versions of Python based on your OS of choice.
 
 ## [Pytest](https://docs.pytest.org/en/7.1.x/)
 

@@ -2,9 +2,11 @@ name: Python Package Test
 
 on: 
   push:
-    branches: ["main"]
-
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main", "dev"]
   workflow_dispatch:
+
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
@@ -14,10 +16,10 @@ concurrency:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.6"]
 
     steps:
       - uses: actions/checkout@v3
