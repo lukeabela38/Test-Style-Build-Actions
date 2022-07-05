@@ -1,5 +1,5 @@
 import pytest
-from main import f, add, subtract, multiply, divide
+from src.main import f, add, subtract, multiply, divide
 
 
 def test_f():
