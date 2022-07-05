@@ -3,7 +3,7 @@ name: Python Package Test
 on: 
   push:
     branches: ["main", "dev"]
-    
+
   workflow_dispatch:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
@@ -45,7 +45,6 @@ jobs:
       with:
         github-token: ${{ secrets.github_token }}
         flag-name: run-ubuntu-18.04-python-3.6.9
-        path-to-lcov: ${{ github.workspace }}/coverage/lcov.info
         parallel: true
 
   coveralls:
