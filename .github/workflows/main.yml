@@ -27,7 +27,6 @@ jobs:
     - name: Execute Docker Compose file
       run: |
         docker-compose up
-/authorize/bitbucket
     - name: Upload Output Logs
       uses: actions/upload-artifact@v3
       with:
