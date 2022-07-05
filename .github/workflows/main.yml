@@ -3,7 +3,8 @@ name: Python Package Test
 on: 
   push:
     branches: ["main", "dev"]
-
+  pull_request:
+    branches: ["main", "dev"]
   workflow_dispatch:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
@@ -39,23 +40,3 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: output-logs
-
-    - name: Coveralls Parallel
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.github_token }}
-        flag-name: run-ubuntu-18.04-python-3.6.9
-        parallel: true
-
-  coveralls:
-    name: Coveralls
-    needs: build
-    runs-on: ubuntu-18.04
-    container: python:3-slim
-    steps:
-    - name: Finished
-      run: |
-        pip3 install --upgrade coveralls
-        coveralls --finish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
