@@ -1,4 +1,4 @@
-# myCalculator
+# Test-Style-Build-Actions
 
 This is a generic template repository to faciltate experimentation for best testing practices. To use simply drop your source code into ```src``` folder and your tests into ```tests``` folder. Push your repository and allow github actions to build and return pytest-flake-coverage results for versions of Python based on your OS of choice.
 
@@ -39,6 +39,6 @@ The following are the definitions employed by Radon:
 5. Multi: The number of lines which represent multi-line strings.
 6. Blanks: The number of blank lines (or whitespace-only ones).
 
-## Halstead Metric
+### Halstead Metric
 
 Halstead’s goal was to identify measurable properties of software, and the relations between them. These numbers are statically computed from the source code.
